@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-mono: "VT323", monospace;
+  --color-cyan-glitch: #00ffff;
+  --color-magenta-glitch: #ff00ff;
+}
+
+body {
+  font-family: "VT323", monospace;
+  background-color: #000;
+  color: #00ffff;
+  overflow-x: hidden;
+}
+
+.glitch-text {
+  position: relative;
+  display: inline-block;
+  color: #fff;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+}
+
+.glitch-text::before {
+  left: 3px;
+  text-shadow: -2px 0 #ff00ff;
+  clip: rect(24px, 550px, 90px, 0);
+  animation: glitch-anim-2 3s infinite linear alternate-reverse;
+}
+
+.glitch-text::after {
+  left: -3px;
+  text-shadow: -2px 0 #00ffff;
+  clip: rect(85px, 550px, 140px, 0);
+  animation: glitch-anim 2.5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim {
+  0% { clip: rect(14px, 9999px, 29px, 0); }
+  20% { clip: rect(85px, 9999px, 96px, 0); }
+  40% { clip: rect(12px, 9999px, 83px, 0); }
+  60% { clip: rect(65px, 9999px, 12px, 0); }
+  80% { clip: rect(34px, 9999px, 55px, 0); }
+  100% { clip: rect(98px, 9999px, 23px, 0); }
+}
+
+@keyframes glitch-anim-2 {
+  0% { clip: rect(65px, 9999px, 100px, 0); }
+  20% { clip: rect(12px, 9999px, 55px, 0); }
+  40% { clip: rect(85px, 9999px, 23px, 0); }
+  60% { clip: rect(34px, 9999px, 96px, 0); }
+  80% { clip: rect(14px, 9999px, 83px, 0); }
+  100% { clip: rect(98px, 9999px, 29px, 0); }
+}
+
+.scanlines {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.3));
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 50;
+}
+
+.crt-flicker {
+  animation: crt-flicker 0.15s infinite;
+}
+
+@keyframes crt-flicker {
+  0% { opacity: 0.95; }
+  50% { opacity: 1; }
+  100% { opacity: 0.9; }
+}
+
+.screen-tear {
+  animation: tear 3s infinite step-end;
+}
+
+@keyframes tear {
+  0% { transform: translateX(0); }
+  95% { transform: translateX(-5px) skewX(2deg); }
+  96% { transform: translateX(5px) skewX(-2deg); }
+  97% { transform: translateX(0); }
+}
